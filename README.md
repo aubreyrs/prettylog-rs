@@ -69,7 +69,6 @@ fn main() {
 There are 16 default log types: **Debug**, **Information**, **Runtime**, **Network**, **Success**, **Warning**, **Error**, **Exception**, **Critical**, **Audit**, **Trace**, **Security**, **User Action**, **Performance**, **Config**, and **Fatal**.
 
 ### Custom log Types
-Needs to be properly implemented 
 
 You can create custom log types by implementing your own enum and associated functions:
 
