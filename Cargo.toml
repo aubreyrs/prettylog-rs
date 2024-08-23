@@ -1,0 +1,33 @@
+[package]
+name = "prettylog-rs"
+version = "0.1.0"
+edition = "2021"
+authors = ["Aubrey <cat@aubrey.rs>"]
+description = "A pretty and customizable logging library for Rust"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/aubreydll/prettylog-rs"
+readme = "README.md"
+keywords = ["logging", "pretty", "color", "terminal"]
+categories = ["development-tools::debugging"]
+
+[lib]
+name = "prettylog_rs"
+path = "src/lib.rs"
+
+[[bin]]
+name = "prettylog-rs"
+path = "src/main.rs"
+
+[dependencies]
+chrono = "0.4"
+once_cell = "1.17"
+thiserror = "1.0"
+
+[dev-dependencies]
+criterion = "0.5.1"
+
+[profile.release]
+lto = true
+codegen-units = 1
+panic = "abort"
+opt-level = 3
