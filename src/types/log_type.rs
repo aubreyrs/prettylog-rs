@@ -1,4 +1,5 @@
 use crate::types::ansi::{AnsiColor, AnsiPair};
+use std::fmt::Debug;
 
 #[derive(Clone, Copy, Debug)]
 pub enum LogType {
@@ -18,6 +19,12 @@ pub enum LogType {
     Performance,
     Config,
     Fatal,
+    Custom(&'static dyn CustomLogType),
+}
+
+pub trait CustomLogType: Sync + Debug {
+    fn name(&self) -> &'static str;
+    fn color_pair(&self) -> AnsiPair;
 }
 
 impl LogType {
@@ -39,6 +46,7 @@ impl LogType {
             LogType::Performance => "⏱️ Performance",
             LogType::Config => "⚙️ Config",
             LogType::Fatal => "☠️ Fatal",
+            LogType::Custom(custom) => custom.name(), // Handle CustomLogType
         }
     }
 
@@ -68,6 +76,7 @@ impl LogType {
             LogType::Performance => AnsiPair::new(AnsiColor::PinkBackground, AnsiColor::Pink),
             LogType::Config => AnsiPair::new(AnsiColor::LightGrayBackground, AnsiColor::LightGray),
             LogType::Fatal => AnsiPair::new(AnsiColor::DarkRedBackground, AnsiColor::DarkRed),
+            LogType::Custom(custom) => custom.color_pair(), // Handle CustomLogType
         }
     }
 }

@@ -11,7 +11,7 @@ Add this to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-prettylog-rs = "0.1.0"
+prettylog-rs = "0.1.1"
 ```
 
 ## Logging
@@ -73,28 +73,28 @@ There are 16 default log types: **Debug**, **Information**, **Runtime**, **Netwo
 You can create custom log types by implementing your own enum and associated functions:
 
 ```rust
-use prettylog_rs::types::{AnsiColor, AnsiPair};
+use prettylog_rs::types::{AnsiColor, AnsiPair, CustomLogType, LogType};
 
-pub enum CustomLogType {
+pub enum MyCustomLogType {
     Cute,
     Git,
     FireWarning,
 }
 
-impl CustomLogType {
-    pub fn name(&self) -> &'static str {
+impl CustomLogType for MyCustomLogType {
+    fn name(&self) -> &'static str {
         match self {
-            CustomLogType::Cute => "≽^•⩊•^≼",
-            CustomLogType::Git => "🤖 Git",
-            CustomLogType::FireWarning => "🔥 Fire Warning",
+            MyCustomLogType::Cute => "≽^•⩊•^≼",
+            MyCustomLogType::Git => "🤖 Git",
+            MyCustomLogType::FireWarning => "🔥 Fire Warning",
         }
     }
 
-    pub fn color_pair(&self) -> AnsiPair {
+    fn color_pair(&self) -> AnsiPair {
         match self {
-            CustomLogType::Cute => AnsiPair::new(AnsiColor::CutePinkBackground, AnsiColor::CutePink),
-            CustomLogType::Git => AnsiPair::new(AnsiColor::AquaBackground, AnsiColor::Aqua),
-            CustomLogType::FireWarning => AnsiPair::new(AnsiColor::OrangeBackground, AnsiColor::Orange),
+            MyCustomLogType::Cute => AnsiPair::new(AnsiColor::CutePinkBackground, AnsiColor::CutePink),
+            MyCustomLogType::Git => AnsiPair::new(AnsiColor::AquaBackground, AnsiColor::Aqua),
+            MyCustomLogType::FireWarning => AnsiPair::new(AnsiColor::OrangeBackground, AnsiColor::Orange),
         }
     }
 }
@@ -102,10 +102,11 @@ impl CustomLogType {
 fn main() {
     prettylog_rs::logger::init();
 
-    log("T-This is vewy cuwute message OwO", CustomLogType::Cute);
-    log("refusing to merge unrelated histories", CustomLogType::Git);
-    log("SERVER ROOM ON FIRE, DONT LET ASO RUN WHILE LOOPS EVER AGAIN", CustomLogType::FireWarning);
+    log("T-This is vewy cuwute message OwO", LogType::Custom(&MyCustomLogType::Cute));
+    log("Refusing to merge unrelated histories", LogType::Custom(&MyCustomLogType::Git));
+    log("SERVER ROOM ON FIRE, DON'T LET ASO RUN WHILE LOOPS EVER AGAIN", LogType::Custom(&MyCustomLogType::FireWarning));
 }
+
 ```
 
 ## License
