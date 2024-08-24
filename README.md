@@ -117,10 +117,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
-## Todo
-
-**Properly implement CustomLogType**
-
 ## Credits
 
 https://github.com/LukynkaCZE
